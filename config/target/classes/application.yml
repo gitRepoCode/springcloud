@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/huangAndWangling/springcloud-config-repo.git #github仓库地址
+          username: huangAndWangling # 用户名
+          password: 1258413841chenai # 密码
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
