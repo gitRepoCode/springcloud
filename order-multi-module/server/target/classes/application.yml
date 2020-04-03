@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: order
+
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.31.129:3306/springcloud?characterEncoding=UTF-8&useSSL=false
+
+  # rabbitmq配置
+  rabbitmq:
+    host: 192.168.99.100
+    port: 5672
+    username: guest
+    password: guest
+
+  #redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+  # spring cloud stream配置
+  cloud:
+    stream:
+      bindings:
+        myInputMessage:
+          group: order # 分组，解决重复发送消息。不配置发内置，部署多个服务一个服务发送消息，每个服务都会接收
+        myInputMessage2:
+          group: order2
+          content-type: application/json # 发送jsong格式数据
+
+# 设置服务之间调用的负载均衡策略
+#PRODUCT:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+# eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+hystrix:
+  command:
+    # Hystrix 设置全局的超时时间
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+    # Hystrix 设置指定方法的超时时间
+    getProductInfoList:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
+
+# feign 启用hystrix 服务降级
+# 操作步骤：1.配置  2.@FeignClient注解加入fallback方法，并注入到Spring容器中 3.扫描feign包
+feign:
+  hystrix:
+    enabled: true
+
+management:
+  context-path: /

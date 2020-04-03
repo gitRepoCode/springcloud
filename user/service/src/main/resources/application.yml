@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: user
+
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.31.129:3306/springcloud?characterEncoding=UTF-8&useSSL=false
+
+  #redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
+
+# eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
