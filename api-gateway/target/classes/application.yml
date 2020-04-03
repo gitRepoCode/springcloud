@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: api-gateway
+
+# zuul网关配置
+zuul:
+  # 获取cookie配置全部服务都可传递cookie。
+  sensitive-headers:
+  # 自定义路由
+  routes:
+    # 第一种自定义路由
+    myProduct: #自定义名称
+      path: /myProduct/**
+      serviceId: product #将/myProduct/**下所有路径映射到 product服务
+    # 第二种自定义路由，简洁写法
+#    product: /myProduct/** #将/myProduct/**下所有路径映射到 product服务
+
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+  # 网关禁止访问地址
+  ignored-patterns:
+#    - /product/product/list
+#    - /myProduct/product/list
+#    - /**/product/list
+
+# 打开/application/routs路径，查看所有路由
+management:
+  security:
+    enabled: false
+
+# eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
